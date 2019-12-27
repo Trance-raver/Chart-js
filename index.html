@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"
+    >
+      {' '}
+    </script>
+    <script
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+      type="text/javascript"
+    ></script>
+
+    <script type="text/javascript" src="jsondata.json"></script>
+    <title>My Radar Chart</title>
+  </head>
+  <body>
+    <div class="container">
+      <canvas id="mychart"></canvas>
+    </div>
+    <script>
+      // var mydata = JSON.parse(data);
+      $.getJSON('jsondata.json', function(json) {
+        // will generate array with ['Monday', 'Tuesday', 'Wednesday']
+        var labels1 = json.map(function(item) {
+          return item;
+        });
+        var labels2 = json.map(function(item) {
+          return item.intensity;
+        });
+        console.log(labels1);
+
+        var mychart = document.getElementById('mychart').getContext('2d');
+        var label1 = [];
+        var data1 = [];
+        /* $.each(labels1, function(i, el) {
+            if ($.inArray(el, label1) === -1) label1.push(el);
+          });
+          for (i = 0; labels1.length; i++) {}*/
+
+        var myradar = new Chart(mychart, {
+          type: 'radar',
+          data: {
+            labels: labels1.topic,
+            datasets: [
+              {
+                label: 'Intensity',
+                data: labels2
+              }
+            ]
+          },
+          options: {}
+        });
+      });
+    </script>
+  </body>
+</html>
